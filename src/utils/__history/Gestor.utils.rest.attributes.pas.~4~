@@ -1,0 +1,40 @@
+unit Gestor.utils.rest.attributes;
+
+interface
+
+uses
+  System.Classes;
+
+type
+  TEndPointParameters = array of string;
+  RestData = class(TCustomAttribute)
+    private
+    FEndPoint: string;
+    FParameters : TEndPointParameters;
+    public
+      constructor Create(aEndPoint : string; aParameters : TEndPointParameters);
+      function EndPoint : string;
+  end;
+implementation
+
+uses
+  System.SysUtils;
+
+{ RestData }
+
+constructor RestData.Create(aEndPoint: string; aParameters: TEndPointParameters);
+begin
+  FEndPoint := aEndPoint;
+  FParameters := aParameters;
+end;
+
+
+function RestData.EndPoint: string;
+var
+  x : integer;
+begin
+  x := sizeof(FParameters);
+  Result := x.ToString;
+end;
+
+end.

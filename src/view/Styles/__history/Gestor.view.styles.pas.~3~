@@ -1,0 +1,10 @@
+unit Gestor.view.styles;
+
+interface
+const
+  COR_FUNDO = $00ffffff;
+  COR_TEMA = $76D37619;
+
+implementation
+
+end.

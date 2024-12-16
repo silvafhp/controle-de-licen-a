@@ -1,0 +1,122 @@
+unit Gestor.model.resource.impl.rest;
+
+interface
+
+uses
+  Data.DB,
+  FireDAC.Stan.Intf,
+  FireDAC.Stan.Option,
+  FireDAC.Stan.Param,
+  FireDAC.Stan.Error,
+  FireDAC.DatS,
+  FireDAC.Phys.Intf,
+  FireDAC.DApt.Intf,
+  FireDAC.Stan.StorageBin,
+  FireDAC.Comp.DataSet,
+  FireDAC.Comp.Client,
+  Gestor.model.resource.interfaces,
+  Gestor.model.resource.impl.rest.params;
+
+Type
+  TRestRequest = class(TInterfacedObject, iRest)
+  private
+    FDataSet : TFDMemTable;
+    FParams : IRestParams;
+    procedure TratarRetorno(Value : string);
+  public
+    constructor Create;
+    destructor Destroy; override;
+    class function New : iRest;
+    function Content : string;
+    function DataSource(Value : TDataSource) : iRest;
+    function Delete : iRest;
+    function Get : iRest;
+    function Params : iRestParams;
+    function Post : iRest; overload;
+    function Put : iRest;
+  end;
+
+implementation
+
+uses
+  RESTRequest4D;
+
+{ TRestRequest }
+
+constructor TRestRequest.Create;
+begin
+  FParams := TRestParams.New(Self);
+  FDataSet := TFDMemTable.Create(nil);
+end;
+
+function TRestRequest.DataSource(Value: TDataSource): iRest;
+begin
+  Result := Self;
+  Value.DataSet := FDataSet;
+end;
+
+function TRestRequest.Delete: iRest;
+begin
+  Result := Self;
+  TRequest
+    .New
+      .BaseURL(FParams.BaseURL + FParams.EndPoint)
+      .Accept(FParams.Accept)
+    .Delete;
+end;
+
+destructor TRestRequest.Destroy;
+begin
+  FDataSet.Free;
+  inherited;
+end;
+
+function TRestRequest.Get: iRest;
+var
+  URL : string;
+  ResultContent : string;
+begin
+  Result := Self;
+  URL := FParams.BaseURL + FParams.EndPoint;
+  ResultContent := TRequest.New
+    .BaseURL(URL)
+    .AcceptEncoding(FParams.Accept)
+  .Get
+  .Content;
+  TratarRetorno(ResultContent);
+end;
+
+class function TRestRequest.New : iRest;
+begin
+  Result := Self.Create;
+end;
+
+function TRestRequest.Params: iRestParams;
+begin
+  Result := FParams;
+end;
+
+function TRestRequest.Post: iRest;
+var
+  ResultResponse : iResponse;
+begin
+  Result := Self;
+  ResultResponse := TRequest.New
+    .BaseURL(FPArams.BaseURL + FParams.EndPoint)
+    .Accept(FParams.Accept)
+    .AddBody(FParams.Body)
+  .Post;
+
+end;
+
+function TRestRequest.Put: iRest;
+begin
+
+end;
+
+procedure TRestRequest.TratarRetorno(Value : string);
+begin
+
+end;
+
+end.

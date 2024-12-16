@@ -1,0 +1,7 @@
+unit Gestor.model.resource.impl.rest.params;
+
+interface
+
+implementation
+
+end.

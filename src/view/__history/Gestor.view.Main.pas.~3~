@@ -1,0 +1,62 @@
+unit Gestor.view.Main;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Router4D.Interfaces, Vcl.ExtCtrls;
+
+type
+  TFormMain = class(TForm, iRouter4DComponent)
+    pnlPrincipal: TPanel;
+    pnlTop: TPanel;
+    pnlMenu: TPanel;
+    pnlPages: TPanel;
+    procedure FormCreate(Sender: TObject);
+  private
+    { Private declarations }
+    procedure AplicarEstilo;
+  public
+    { Public declarations }
+    function Render : TForm;
+    procedure UnRender;
+  end;
+
+var
+  FormMain: TFormMain;
+
+implementation
+
+uses
+  Router4D,
+  Gestor.View.styles,
+  Gestor.view.pages.generic;
+
+{$R *.dfm}
+
+{ TFormMain }
+
+procedure TFormMain.AplicarEstilo;
+begin
+  pnlPages.Color := COR_FUNDO;
+  pnlTop.Color := COR_TEMA;
+end;
+
+procedure TFormMain.FormCreate(Sender: TObject);
+begin
+  AplicarEstilo;
+end;
+
+function TFormMain.Render: TForm;
+begin
+  Result := Self;
+  TRouter4D.Render<TPageGeneric>.SetElement(pnlPages);
+  TRouter4D.Link.&To('Principal');
+end;
+
+procedure TFormMain.UnRender;
+begin
+//
+end;
+
+end.

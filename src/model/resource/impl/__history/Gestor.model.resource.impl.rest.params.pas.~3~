@@ -1,0 +1,79 @@
+unit Gestor.model.resource.impl.rest.params;
+
+interface
+
+uses
+  Gestor.model.resource.interfaces;
+
+Type
+  TRestParams = class(TInterfacedObject, iRestParams)
+  private
+  public
+    constructor Create;
+    destructor Destroy; override;
+    class function New : iRestParams;
+    function BaseURL (Value : String ) : iRestParams; overload;
+    function BaseURL : String; overload;
+    function EndPoint (Value : string ) : iRestParams; overload;
+    function EndPoint : String; overload;
+    function Accept(Value : string) : iRestParams; overload;
+    function Accept : string; overload;
+    function &End : iRest;
+  end;
+
+implementation
+
+{ TRestParams }
+
+function TRestParams.BaseURL(Value: String): iRestParams;
+begin
+
+end;
+
+function TRestParams.Accept: string;
+begin
+
+end;
+
+function TRestParams.Accept(Value: string): iRestParams;
+begin
+
+end;
+
+function TRestParams.BaseURL: String;
+begin
+
+end;
+
+function TRestParams.&End: iRest;
+begin
+
+end;
+
+constructor TRestParams.Create;
+begin
+
+end;
+
+destructor TRestParams.Destroy;
+begin
+
+  inherited;
+end;
+
+function TRestParams.EndPoint(Value: String): iRestParams;
+begin
+
+end;
+
+function TRestParams.EndPoint: String;
+begin
+
+end;
+
+class function TRestParams.New : iRestParams;
+begin
+  Result := Self.Create;
+end;
+
+end.

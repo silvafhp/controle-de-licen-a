@@ -1,0 +1,31 @@
+unit Gestor.utils.rest.attributes;
+
+interface
+
+type
+  RestData = class(TCustomAttribute)
+    private
+      FEndPoint: string;
+    public
+      constructor Create(aEndPoint : string);
+      function EndPoint : string;
+  end;
+implementation
+
+uses
+  System.SysUtils, System.Rtti;
+
+{ RestData }
+
+constructor RestData.Create(aEndPoint: string);
+begin
+  FEndPoint := aEndPoint;
+end;
+
+
+function RestData.EndPoint: string;
+begin
+  Result := FEndPoint;
+end;
+
+end.

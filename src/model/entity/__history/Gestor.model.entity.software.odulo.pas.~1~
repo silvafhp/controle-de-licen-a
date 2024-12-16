@@ -1,0 +1,38 @@
+unit Gestor.model.entity.software.Modulo;
+
+interface
+uses
+  Gestor.utils.Rest.Attributes;
+
+type
+  [RestData('softwares/:IDSOFTWARE')]
+  TModulo = class
+    private
+    FID: String;
+    FIDSOFTWARE: String;
+    FNOME: String;
+    public
+      constructor Create;
+      destructor Destroy; override;
+      [RestPK]
+      property ID : String read FID write FID;
+      property IDSOFTWARE : String read FIDSOFTWARE write FIDSOFTWARE;
+      property NOME : String read FNOME write FNOME;
+  end;
+
+implementation
+
+{ TModulo }
+
+constructor TModulo.Create;
+begin
+
+end;
+
+destructor TModulo.Destroy;
+begin
+
+  inherited;
+end;
+
+end.

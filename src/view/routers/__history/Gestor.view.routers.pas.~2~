@@ -1,0 +1,39 @@
+unit Gestor.view.routers;
+
+interface
+
+type
+  TRouters = class
+    private
+    public
+      constructor Create;
+      destructor Destroy; override;
+  end;
+
+var
+  Routers : TRouters;
+
+implementation
+uses
+  Router4D;
+
+{ TRouters }
+
+constructor TRouters.Create;
+begin
+
+end;
+
+destructor TRouters.Destroy;
+begin
+
+  inherited;
+end;
+
+initialization
+  Routers := TRouters.Create;
+
+finalization
+  Routers.Free;
+
+end.

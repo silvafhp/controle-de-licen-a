@@ -1,0 +1,26 @@
+unit Gestor.utils.Rest.Attributes;
+
+interface
+
+type
+  RestData = class(TCustomAttribute)
+    private
+    FEndPoint: string;
+    FParameters : array of string;
+    procedure SetEndPoint(const Value: string);
+    public
+      constructor Create(aEndPoint : string; aParameters : array of string);
+      function EndPoint : string;
+  end;
+implementation
+
+{ RestData }
+
+constructor RestData.Create(aEndPoint: string; aParameters: array of string);
+begin
+  FEndPoint := aEndPoint;
+  FParameters := aParameters;
+end;
+
+
+end.

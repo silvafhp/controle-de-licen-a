@@ -1,0 +1,34 @@
+unit Gestor.view.pages.clientes;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Gestor.view.pages.Template, Data.DB,
+  Vcl.Grids, Vcl.DBGrids, Vcl.Buttons, Vcl.WinXPanels, Vcl.StdCtrls,
+  Vcl.ExtCtrls, Gestor.controller.interfaces;
+
+type
+  TPageClientes = class(TPageTemplate)
+    procedure btnNovoClick(Sender: TObject);
+  private
+    { Private declarations }
+    FController : iController;
+  public
+    { Public declarations }
+  end;
+
+var
+  PageClientes: TPageClientes;
+
+implementation
+
+{$R *.dfm}
+
+procedure TPageClientes.btnNovoClick(Sender: TObject);
+begin
+  inherited;
+  FController.Cliente.ID('10').Build.Inserir;
+end;
+
+end.

@@ -1,0 +1,10 @@
+unit Gestor.view.styles;
+
+interface
+const
+  COLOR_BACKGROUND = $00ffffff;
+  COLOR_THEME = $76D37619;
+
+implementation
+
+end.

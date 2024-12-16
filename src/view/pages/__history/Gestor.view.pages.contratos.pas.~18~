@@ -1,0 +1,179 @@
+﻿unit Gestor.view.pages.contratos;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Gestor.view.pages.template, Data.DB,
+  Vcl.Grids, Vcl.DBGrids, Vcl.Buttons, Vcl.WinXPanels, Vcl.StdCtrls,
+  Vcl.ExtCtrls, Vcl.CheckLst, Vcl.WinXCtrls, Vcl.ComCtrls;
+
+type
+  TPageContratos = class(TPageTemplate)
+    StackPanel2: TStackPanel;
+    Label4: TLabel;
+    edtID: TEdit;
+    Label5: TLabel;
+    Label6: TLabel;
+    pnlModulos: TStackPanel;
+    Label1: TLabel;
+    cbCliente: TComboBox;
+    cbSoftware: TComboBox;
+    Label2: TLabel;
+    dateData: TDateTimePicker;
+    Label3: TLabel;
+    dateVencimento: TDateTimePicker;
+    Panel1: TPanel;
+    Label7: TLabel;
+    tgBloqueado: TToggleSwitch;
+    listModulos: TCheckListBox;
+    procedure btnExcluirClick(Sender: TObject);
+    procedure btnSalvarClick(Sender: TObject);
+    procedure CardPanel1CardChange(Sender: TObject; PrevCard, NextCard: TCard);
+  private
+    { Private declarations }
+    procedure SelecionarNaLista(List : TCustomCombo; value : String);
+    function GetToggleValue(Toggle : TToggleSwitch) : string;
+    procedure PreencherListaClientes;
+    procedure PreencherListaSoftwares;
+    procedure PreencherListaSoftwareModulos(IDSoftware : string);
+    procedure VerificarControles;
+  public
+    { Public declarations }
+    procedure Pesquisar; override;
+    procedure PreencherCampos; override;
+  end;
+
+var
+  PageContratos: TPageContratos;
+
+implementation
+
+uses
+  Gestor.utils;
+
+{$R *.dfm}
+
+procedure TPageContratos.btnExcluirClick(Sender: TObject);
+begin
+  FController
+    .Contrato
+      .ID(edtID.Text)
+      .Build
+        .Excluir;
+  inherited;
+end;
+
+procedure TPageContratos.btnSalvarClick(Sender: TObject);
+begin
+  FController
+    .Contrato
+      .ID(edtID.Text)
+      .DESCRICAO(Format('%s - %s', [cbCliente.Text, cbSoftware.Text]))
+      .IDCLIENTE(getValueCombo(cbCliente))
+      .IDSOFTWARE(getValueCombo(cbSoftware))
+      .DATA(dateData.Date)
+      .Vencimento(dateVencimento.Date)
+      .BLOQUEADO(GetToggleValue(tgBloqueado));
+
+  case FTypeOperacao of
+    toIncluir:
+    begin
+      edtID.Text := FController.Contrato.build.Inserir.this.ID;
+      FTypeOperacao := toAlterar;
+      VerificarControles;
+      exit
+    end;
+    toAlterar: FController.Contrato.build.Atualizar;
+  end;
+
+  inherited;
+end;
+
+procedure TPageContratos.CardPanel1CardChange(Sender: TObject; PrevCard,
+  NextCard: TCard);
+begin
+  inherited;
+  VerificarControles;
+end;
+
+function TPageContratos.GetToggleValue(Toggle: TToggleSwitch): string;
+begin
+  Result := 'N';
+  if Toggle.State = tssOn then
+    Result := 'S';
+end;
+
+procedure TPageContratos.VerificarControles;
+begin
+  pnlModulos.Visible := FTypeOperacao = toAlterar;
+  cbCliente.Enabled := FTypeOperacao = toIncluir;
+  cbSoftware.Enabled := FTypeOperacao = toIncluir;
+end;
+
+procedure TPageContratos.Pesquisar;
+begin
+  FController
+    .Contrato
+      .Build
+        .DataSource(DataSource)
+        .ListarTodos;
+  PreencherListaClientes;
+  PreencherListaSoftwares;
+  inherited;
+end;
+
+procedure TPageContratos.PreencherCampos;
+begin
+  edtID.Text := FController.Contrato.build.List[Pred(datasource.DataSet.RecNo)].ID;
+  SelecionarNaLista(cbCliente, FController.contrato.build.List[Pred(datasource.DataSet.RecNo)].IDCLIENTE);
+  SelecionarNaLista(cbSoftware, FController.contrato.build.List[Pred(datasource.DataSet.RecNo)].IDSOFTWARE);
+  dateData.Date := FController.Contrato.build.List[Pred(datasource.DataSet.RecNo)].DATA;
+  dateVencimento.Date := FController.Contrato.build.List[Pred(datasource.DataSet.RecNo)].VENCIMENTO;
+  if FController.Contrato.build.List[Pred(datasource.DataSet.RecNo)].BLOQUEADO = 'S' then
+    tgBloqueado.State := tssOn;
+  PreencherListaSoftwareModulos(FController.Contrato.build.List[Pred(datasource.DataSet.RecNo)].IDSOFTWARE);
+
+end;
+
+procedure TPageContratos.PreencherListaClientes;
+begin
+  FController
+    .Cliente
+      .Build.ListarTodos;
+
+  FController.Cliente.PreencherLista(cbCliente.Items);
+end;
+
+procedure TPageContratos.PreencherListaSoftwareModulos(IDSoftware : string);
+begin
+  FController
+    .SoftwareModulo
+      .IDSOFTWARE(IDSoftware)
+      .Build.ListarTodos;
+
+  FController.SoftwareModulo.PreencherLista(listModulos.Items);
+end;
+
+procedure TPageContratos.PreencherListaSoftwares;
+begin
+  FController
+    .Software
+      .Build.ListarTodos;
+
+  FController.Software.PreencherLista(cbSoftware.Items);
+end;
+
+procedure TPageContratos.SelecionarNaLista(List : TCustomCombo; value: String);
+var
+  Contador : Integer;
+begin
+  for Contador := 0 to Pred(List.items.Count) do
+    if TStringObject(list.Items.Objects[Contador]).StringValue = value then
+    begin
+      List.ItemIndex := Contador;
+      exit;
+    end;
+end;
+
+end.

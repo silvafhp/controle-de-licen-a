@@ -1,0 +1,7 @@
+unit Gestor.model.resource.impl.rest.actory;
+
+interface
+
+implementation
+
+end.

@@ -1,0 +1,7 @@
+unit Gestor.utils.rtti.helper;
+
+interface
+
+implementation
+
+end.

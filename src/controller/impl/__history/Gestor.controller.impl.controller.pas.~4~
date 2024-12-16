@@ -1,0 +1,61 @@
+unit Gestor.controller.impl.controller;
+
+interface
+
+uses
+  Gestor.controller.interfaces,
+  Gestor.controller.dto.interfaces;
+
+Type
+  TController = class(TInterfacedObject, iController)
+  private
+    FCliente : iCliente;
+    FSoftware : iSoftware;
+  public
+    constructor Create;
+    destructor Destroy; override;
+    class function New : iController;
+    function Cliente: iCliente;
+    function Software: iSoftware;
+  end;
+
+implementation
+
+uses
+  Gestor.controller.dto.impl.cliente, Gestor.controller.dto.impl.Software;
+
+{ TController }
+
+function TController.Cliente: iCliente;
+begin
+  if not assigned(FCliente) then
+    FCliente := TClienteDTO.New;
+
+  Result := FCliente;
+end;
+
+constructor TController.Create;
+begin
+
+end;
+
+destructor TController.Destroy;
+begin
+
+  inherited;
+end;
+
+class function TController.New : iController;
+begin
+  Result := Self.Create;
+end;
+
+function TController.Software: iSoftware;
+begin
+  if not Assigned(FSoftware) then
+    FSoftware := TSoftwareDTO.New;
+
+  Result := FSoftware;
+end;
+
+end.

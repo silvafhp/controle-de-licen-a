@@ -1,0 +1,89 @@
+unit Gestor.controller.dto.impl.software.modulo;
+
+interface
+
+uses
+  Gestor.controller.dto.interfaces,
+  Gestor.model.entity.software.modulo;
+
+Type
+  TSoftwareModulo = class(TInterfacedObject, iSoftware)
+  private
+    FEntity : TSoftwareModulo;
+    FService : iService<TSoftwareModulo>;
+  public
+    constructor Create;
+    destructor Destroy; override;
+    class function New : iSoftware;
+    function ID(Value : string) : iSoftware; overload;
+    function ID : string; overload;
+    function IDSOFTWARE(Value : string) : iSoftware; overload;
+    function IDSOFTWARE : string; overload;
+    function NOME(Value : string) : iSoftware; overload;
+    function NOME : string; overload;
+    function Build : iService<TSoftwareModulo>;
+  end;
+
+implementation
+
+uses
+  Gestor.model.service.impl.rest;
+
+{ TSoftwareModulo }
+
+function TSoftwareModulo.Build: iService<TSoftwareModulo>;
+begin
+  Result := FService;
+end;
+
+constructor TSoftwareModulo.Create;
+begin
+  FEntity := TSoftwareModulo.Create;
+  FService := TServiceRest<TSoftwareModulo>.New(FEntity);
+end;
+
+destructor TSoftwareModulo.Destroy;
+begin
+  FEntity.Free;
+  inherited;
+end;
+
+function TSoftwareModulo.ID: string;
+begin
+  Result := FEntity.ID;
+end;
+
+function TSoftwareModulo.ID(Value: string): iSoftware;
+begin
+  Result := Self;
+  FEntity.ID(Value);
+end;
+
+function TSoftwareModulo.IDSOFTWARE: string;
+begin
+  Result := FEntity.IDSOFTWARE;
+end;
+
+function TSoftwareModulo.IDSOFTWARE(Value: string): iSoftware;
+begin
+  Result := Self;
+  FEntity.IDSOFTWARE(Value);
+end;
+
+class function TSoftwareModulo.New : iSoftware;
+begin
+  Result := Self.Create;
+end;
+
+function TSoftwareModulo.NOME(Value: string): iSoftware;
+begin
+  Result := Self;
+  FEntity.NOME(Value);
+end;
+
+function TSoftwareModulo.NOME: string;
+begin
+  Result := FEntity.NOME;
+end;
+
+end.

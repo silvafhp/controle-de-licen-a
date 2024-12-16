@@ -1,0 +1,40 @@
+unit ControleDeLicencas.model.entity.Modulo;
+
+interface
+uses
+  SimpleAttributes;
+
+type
+  [Tabela('MODULOS')]
+  TModulo = class
+    private
+    FID: String;
+    FIDSOFTWARE: String;
+    FNOME: String;
+    public
+      constructor Create;
+      destructor Destroy; override;
+      [Campo('ID'), Pk]
+      property ID : String read FID write FID;
+      [Campo('IDSOFTWARE'), FK, NotNull]
+      property IDSOFTWARE : String read FIDSOFTWARE write FIDSOFTWARE;
+      [Campo('NOME'), NotNull]
+      property NOME : String read FNOME write FNOME;
+  end;
+
+implementation
+
+{ TModulo }
+
+constructor TModulo.Create;
+begin
+
+end;
+
+destructor TModulo.Destroy;
+begin
+
+  inherited;
+end;
+
+end.

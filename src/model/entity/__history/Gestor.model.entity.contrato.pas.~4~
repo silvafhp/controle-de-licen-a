@@ -1,0 +1,49 @@
+unit Gestor.model.entity.contrato;
+
+interface
+uses
+  Gestor.utils.Rest.Attributes;
+
+type
+  [RestData('contratos')]
+  TContrato = class
+    private
+    FID: String;
+    FIDCLIENTE: string;
+    FIDSOFTWARE: string;
+    FBLOQUEADO: string;
+    FDATA: TDateTime;
+    FVENCIMENTO: TDateTime;
+    public
+      constructor Create;
+      destructor Destroy; override;
+      [Campo('ID'), Pk]
+      property ID: String read FID write FID;
+      [Campo('IDCLIENTE'), FK, NotNull]
+      property IDCLIENTE: String read FIDCLIENTE write FIDCLIENTE;
+      [Campo('IDSOFTWARE'), FK, NotNull]
+      property IDSOFTWARE: String read FIDSOFTWARE write FIDSOFTWARE;
+      [Campo('BLOQUEADO'), NotNull]
+      property BLOQUEADO: String read FBLOQUEADO write FBLOQUEADO;
+      [Campo('DATA'), NotNull]
+      property DATA: TDateTime read FDATA write FDATA;
+      [Campo('VENCIMENTO'), NotNull]
+      property VENCIMENTO: TDateTime read FVENCIMENTO write FVENCIMENTO;
+  end;
+
+implementation
+
+{ TContrato }
+
+constructor TContrato.Create;
+begin
+
+end;
+
+destructor TContrato.Destroy;
+begin
+
+  inherited;
+end;
+
+end.

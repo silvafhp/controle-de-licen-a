@@ -1,0 +1,7 @@
+unit Gestor.model.resource.impl.rest.Factory;
+
+interface
+
+implementation
+
+end.

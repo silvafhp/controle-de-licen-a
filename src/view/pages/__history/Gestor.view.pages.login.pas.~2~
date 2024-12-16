@@ -1,0 +1,52 @@
+unit Gestor.view.pages.login;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.Buttons, Vcl.StdCtrls,
+  Vcl.WinXPanels, Vcl.ExtCtrls, Router4D.Interfaces;
+
+type
+  TPageLogin = class(TForm, iRouter4DComponent)
+    PnlPrincipal: TPanel;
+    PnlLeft: TPanel;
+    PnlRight: TPanel;
+    StackPanel1: TStackPanel;
+    Label2: TLabel;
+    Label1: TLabel;
+    Panel3: TPanel;
+    Label3: TLabel;
+    Edit2: TEdit;
+    Label4: TLabel;
+    Edit1: TEdit;
+    Panel4: TPanel;
+    BtnEntrar: TSpeedButton;
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+    function Render : TForm;
+    procedure UnRender;
+  end;
+
+var
+  PageLogin: TPageLogin;
+
+implementation
+
+{$R *.dfm}
+
+{ TForm1 }
+
+function TPageLogin.Render: TForm;
+begin
+  Result := Self;
+end;
+
+procedure TPageLogin.UnRender;
+begin
+
+end;
+
+end.

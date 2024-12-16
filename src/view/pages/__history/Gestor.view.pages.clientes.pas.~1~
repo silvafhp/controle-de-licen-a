@@ -1,0 +1,26 @@
+unit Gestor.view.pages.clientes;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Gestor.view.pages.Template, Data.DB,
+  Vcl.Grids, Vcl.DBGrids, Vcl.Buttons, Vcl.WinXPanels, Vcl.StdCtrls,
+  Vcl.ExtCtrls;
+
+type
+  TPageClientes = class(TPageTemplate)
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  PageClientes: TPageClientes;
+
+implementation
+
+{$R *.dfm}
+
+end.

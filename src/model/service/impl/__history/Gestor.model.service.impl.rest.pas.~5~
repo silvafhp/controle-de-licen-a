@@ -1,0 +1,133 @@
+unit Gestor.model.service.impl.rest;
+
+interface
+
+uses
+  Data.DB,
+  System.Generics.Collections,
+  Gestor.model.service.interfaces,
+  Gestor.model.resource.interfaces;
+
+Type
+  TServiceRest<T : class, constructor> = class(TInterfacedObject, iService<T>)
+  private
+    FParent : T;
+    FList : TObjectList<T>;
+    FRest : iRest;
+    function ObjectToJSONString : string;
+  public
+    constructor Create(Parent : T);
+    destructor Destroy; override;
+    class function New(Parent : T) : iService<T>;
+    function Atualizar: iService<T>;
+    function DataSource(Value : TDataSource) : iService<T>;
+    function Excluir: iService<T>; overload;
+    function Excluir(Field, Value: String): iService<T>; overload;
+    function Inserir: iService<T>;
+    function IsEmpty : Boolean;
+    function List : TObjectList<T>;
+    function ListarPor(Field: String; Value: Variant): iService<T>;
+    function ListarPorId(aId: String): iService<T>;
+    function ListarTodos: iService<T>;
+    function This: T;
+  end;
+
+implementation
+
+uses
+  Gestor.model.resource.impl.rest.factory,
+  Gestor.utils.Rtti,
+  GBJSON.Helper,
+  GBJSON.Interfaces;
+
+{ TServiceRest<T> }
+
+function TServiceRest<T>.Atualizar: iService<T>;
+begin
+
+end;
+
+constructor TServiceRest<T>.Create(Parent : T);
+begin
+  FParent := Parent;
+  FList := TObjectList<T>.Create;
+  FRest := TRestFactory.GetInstance.Rest;
+  TGBJSONConfig.GetInstance.CaseDefinition(TCaseDefinition.cdLower);
+end;
+
+function TServiceRest<T>.DataSource(Value: TDataSource): iService<T>;
+begin
+  Result := Self;
+  FRest.DataSource(Value);
+end;
+
+destructor TServiceRest<T>.Destroy;
+begin
+  FList.Free;
+  inherited;
+end;
+
+function TServiceRest<T>.Excluir: iService<T>;
+begin
+
+end;
+
+function TServiceRest<T>.Excluir(Field, Value: String): iService<T>;
+begin
+
+end;
+
+function TServiceRest<T>.Inserir: iService<T>;
+var
+  EndPoint : string;
+begin
+  TUtilsRtti<T>.New(FParent).EndPoint(EndPoint);
+  FRest
+    .Params
+      .EndPoint(EndPoint)
+      .Body(ObjectToJSONString)
+    .&End
+  .Post;
+end;
+
+function TServiceRest<T>.IsEmpty: Boolean;
+begin
+
+end;
+
+function TServiceRest<T>.List: TObjectList<T>;
+begin
+
+end;
+
+function TServiceRest<T>.ListarPor(Field: String; Value: Variant): iService<T>;
+begin
+
+end;
+
+function TServiceRest<T>.ListarPorId(aId: String): iService<T>;
+begin
+
+end;
+
+function TServiceRest<T>.ListarTodos: iService<T>;
+begin
+
+end;
+
+class function TServiceRest<T>.New(Parent : T) : iService<T>;
+begin
+  Result := Self.Create(Parent);
+end;
+
+function TServiceRest<T>.ObjectToJSONString: String;
+begin
+  Result := TGBJSONDefault.Deserializer<T>(False).ObjectToJsonString(FParent);
+end;
+
+function TServiceRest<T>.This: T;
+begin
+
+end;
+
+end.

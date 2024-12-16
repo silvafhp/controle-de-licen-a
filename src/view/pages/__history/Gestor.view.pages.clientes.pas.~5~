@@ -1,0 +1,72 @@
+unit Gestor.view.pages.clientes;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Gestor.view.pages.Template, Data.DB,
+  Vcl.Grids, Vcl.DBGrids, Vcl.Buttons, Vcl.WinXPanels, Vcl.StdCtrls,
+  Vcl.ExtCtrls;
+
+type
+  TPageClientes = class(TPageTemplate)
+    StackPanel1: TStackPanel;
+    edtID: TEdit;
+    pnlCadastroBody: TPanel;
+    Label1: TLabel;
+    Label2: TLabel;
+    edtNome: TEdit;
+    Label3: TLabel;
+    edtCNPJ: TEdit;
+    procedure btnAtualizarClick(Sender: TObject);
+    procedure btnSalvarClick(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+    procedure Pesquisar; override;
+    procedure PreencherCampos; override;
+  end;
+
+var
+  PageClientes: TPageClientes;
+
+implementation
+
+{$R *.dfm}
+
+procedure TPageClientes.btnAtualizarClick(Sender: TObject);
+begin
+  inherited;
+  Pesquisar;
+end;
+
+procedure TPageClientes.btnSalvarClick(Sender: TObject);
+begin
+  FController
+    .Cliente
+      .ID(edtID.Text)
+      .NOME(EdtNome.Text)
+      .CNPJ(edtCNPJ.Text);
+  case FTypeOperacao of
+    toIncluir: FController.Cliente.build.Inserir;
+    toAlterar: FController.Cliente.build.Atualizar;
+  end;
+  inherited;
+end;
+
+procedure TPageClientes.Pesquisar;
+begin
+  FController
+    .Cliente
+      .Build
+      .DataSource(DataSource)
+      .ListarTodos;
+end;
+
+procedure TPageClientes.PreencherCampos;
+begin
+
+end;
+
+end.

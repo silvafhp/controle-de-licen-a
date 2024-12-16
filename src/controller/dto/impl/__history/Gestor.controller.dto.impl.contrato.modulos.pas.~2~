@@ -1,0 +1,108 @@
+unit Gestor.controller.dto.impl.contrato.modulos;
+
+interface
+
+uses
+  Gestor.controller.dto.interfaces,
+  Gestor.model.entity.Contrato.modulo,
+  Gestor.model.service.interfaces, System.Classes;
+
+Type
+  TContratoModuloDTO = class(TInterfacedObject, iSoftware)
+  private
+    FEntity : TContratoModuloDTO;
+    FService : iService<TContratoModuloDTO>;
+  public
+    constructor Create;
+    destructor Destroy; override;
+    class function New : iSoftware;
+    function ID(Value : string) : iContratoModulo; overload;
+    function ID : string; overload;
+    function IDCONTRATO(Value : string) : iContratoModulo; overload;
+    function IDCONTRATO : string; overload;
+    function IDMODULO(Value : string) : iContratoModulo; overload;
+    function IDMODULO : string; overload;
+    function Build : iService<TContratoModuloDTO>;
+    function PrencherLista(Value : TStrings) : iContratoModulo;
+    function FromObject(Value : TObject) : iContratoModulo;
+  end;
+
+implementation
+
+uses
+  Gestor.model.service.impl.rest, System.SysUtils;
+
+{ TContratoModuloDTO }
+
+function TContratoModuloDTO.Build: iService<TContratoModuloDTO>;
+begin
+  Result := FService;
+end;
+
+constructor TContratoModuloDTO.Create;
+begin
+  FEntity := TContratoModuloDTO.Create;
+  FService := TServiceRest<TContratoModuloDTO>.New(FEntity);
+end;
+
+destructor TContratoModuloDTO.Destroy;
+begin
+  FEntity.Free;
+  inherited;
+end;
+
+function TContratoModuloDTO.FromObject(Value: TObject): iContratoModulo;
+var
+  ContratoModulo : TContratoModuloDTO;
+begin
+  Result := Self;
+  if not (Value is TContratoModuloDTO) then
+    raise Exception.Create('Objeto não compatível');
+
+  ContratoModulo := TContratoModuloDTO(Value);
+  FEntity.ID := ContratoModulo.ID;
+  FEntity.DESCRICAO := ContratoModulo.NOME;
+  FEntity.DESCRICAO := ContratoModulo.DESCRICAO;
+end;
+
+function TContratoModuloDTO.ID(Value: string): iContratoModulo;
+begin
+
+end;
+
+function TContratoModuloDTO.ID: string;
+begin
+
+end;
+
+function TContratoModuloDTO.IDCONTRATO(Value: string): iContratoModulo;
+begin
+
+end;
+
+function TContratoModuloDTO.IDCONTRATO: string;
+begin
+
+end;
+
+function TContratoModuloDTO.IDMODULO: string;
+begin
+
+end;
+
+function TContratoModuloDTO.IDMODULO(Value: string): iContratoModulo;
+begin
+
+end;
+
+class function TContratoModuloDTO.New : iSoftware;
+begin
+  Result := Self.Create;
+end;
+
+function TContratoModuloDTO.PrencherLista(Value: TStrings): iContratoModulo;
+begin
+
+end;
+
+end.

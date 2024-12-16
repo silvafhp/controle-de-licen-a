@@ -1,0 +1,40 @@
+unit Gestor.model.entity.Cliente;
+
+interface
+uses
+  SimpleAttributes;
+
+type
+  [Tabela('CLIENTES')]
+  TCliente = class
+    private
+    FID: String;
+    FNOME: String;
+    FCNPJ: String;
+    public
+      constructor Create;
+      destructor Destroy; override;
+      [Campo('ID'), Pk]
+      property ID: String read FID write FID;
+      [Campo('NOME'), NotNull]
+      property NOME: String read FNOME write FNOME;
+      [Campo('CNPJ'), NotNull]
+      property CNPJ: String read FCNPJ write FCNPJ;
+  end;
+
+implementation
+
+{ TCliente }
+
+constructor TCliente.Create;
+begin
+
+end;
+
+destructor TCliente.Destroy;
+begin
+
+  inherited;
+end;
+
+end.

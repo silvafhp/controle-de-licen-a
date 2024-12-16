@@ -1,0 +1,37 @@
+unit Gestor.model.entity.oftware;
+
+interface
+uses
+  Gestor.utils.Rest.Attributes;
+
+type
+  [RestData('softwares')]
+  TSoftware = class
+    private
+      FID : String;
+      FNOME : String;
+      FDESCRICAO : String;
+    public
+      constructor Create;
+      destructor Destroy; override;
+      [RestPK]
+      property ID : String read FID write FID;
+      property NOME : String read FNOME write FNOME;
+      property DESCRICAO : String read FDESCRICAO write FDESCRICAO;
+  end;
+implementation
+
+{ TSoftware }
+
+constructor TSoftware.Create;
+begin
+
+end;
+
+destructor TSoftware.Destroy;
+begin
+
+  inherited;
+end;
+
+end.

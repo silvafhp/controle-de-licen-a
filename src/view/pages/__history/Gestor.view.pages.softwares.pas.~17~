@@ -1,0 +1,164 @@
+unit Gestor.view.pages.softwares;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Gestor.view.pages.template, Data.DB,
+  Vcl.Grids, Vcl.DBGrids, Vcl.Buttons, Vcl.WinXPanels, Vcl.StdCtrls,
+  Vcl.ExtCtrls, Vcl.CheckLst;
+
+type
+  TPageSoftwares = class(TPageTemplate)
+    StackPanel1: TStackPanel;
+    Label1: TLabel;
+    StackPanel2: TStackPanel;
+    Label4: TLabel;
+    edtID: TEdit;
+    Label5: TLabel;
+    edtNome: TEdit;
+    Label6: TLabel;
+    edtDescricao: TEdit;
+    listModulos: TListBox;
+    Panel1: TPanel;
+    btnRemoverModulo: TSpeedButton;
+    btnAdicionarModulo: TSpeedButton;
+    procedure btnSalvarClick(Sender: TObject);
+    procedure btnExcluirClick(Sender: TObject);
+    procedure gridDadosDblClick(Sender: TObject);
+    procedure listModulosDblClick(Sender: TObject);
+    procedure btnAdicionarModuloClick(Sender: TObject);
+    procedure btnRemoverModuloClick(Sender: TObject);
+  private
+    { Private declarations }
+    procedure PreencherListaModulos;
+  public
+    { Public declarations }
+    procedure Pesquisar; override;
+    procedure PreencherCampos; override;
+  end;
+
+var
+  PageSoftwares: TPageSoftwares;
+
+implementation
+
+{$R *.dfm}
+
+{ TPageSoftwares }
+
+procedure TPageSoftwares.btnAdicionarModuloClick(Sender: TObject);
+var
+  NomeModulo : String;
+begin
+  inherited;
+  NomeModulo := InputBox('Incluir Módulo', 'Digite o nome do módulo', '');
+  if not NomeModulo.IsEmpty then
+  begin
+    FController
+      .SoftwareModulo
+        .IDSOFTWARE(edtID.Text)
+        .NOME(NomeModulo)
+        .Build
+          .Inserir;
+    PreencherListaModulos;
+  end;
+end;
+
+procedure TPageSoftwares.btnExcluirClick(Sender: TObject);
+begin
+  FController
+    .Software
+      .ID(edtID.Text)
+      .Build
+        .Excluir;
+  inherited;
+end;
+
+procedure TPageSoftwares.btnRemoverModuloClick(Sender: TObject);
+begin
+  if listModulos.ItemIndex > -1 then
+  begin
+    FController
+      .SoftwareModulo
+        .FromObject(listModulos.Items.Objects[listModulos.ItemIndex])
+        .Build
+          .Excluir;
+    PreencherListaModulos;
+  end;  
+end;
+
+procedure TPageSoftwares.btnSalvarClick(Sender: TObject);
+begin
+  FController
+    .Software
+      .ID(edtID.Text)
+      .NOME(EdtNome.Text)
+      .DESCRICAO(edtDescricao.Text);
+  case FTypeOperacao of
+    toIncluir: FController.Software.build.Inserir;
+    toAlterar: FController.Software.build.Atualizar;
+  end;
+
+  inherited;
+end;
+
+procedure TPageSoftwares.gridDadosDblClick(Sender: TObject);
+begin
+  inherited;
+  if FTypeOperacao = toAlterar  then
+  begin
+    PreencherListaModulos;
+  end;
+end;
+
+procedure TPageSoftwares.listModulosDblClick(Sender: TObject);
+var
+  NomeModulo : String;
+begin
+  inherited;
+  NomeModulo := InputBox('Alterar Módulo', 'Digite o nome do módulo', listModulos.Items[listModulos.ItemIndex]);
+  if not NomeModulo.IsEmpty then
+  begin
+    FController
+      .SoftwareModulo
+        .FromObject(listModulos.Items.Objects[listModulos.ItemIndex])
+        .NOME(NomeModulo)
+        .Build
+          .Atualizar;
+    PreencherListaModulos;
+  end;
+
+end;
+
+procedure TPageSoftwares.Pesquisar;
+begin
+  FController
+    .Software
+      .Build
+        .DataSource(DataSource)
+        .ListarTodos;
+  inherited;
+end;
+
+procedure TPageSoftwares.PreencherCampos;
+begin
+  edtID.Text := FController.software.build.List[Pred(datasource.DataSet.RecNo)].ID;
+  edtNome.Text := FController.software.build.List[Pred(datasource.DataSet.RecNo)].NOME;
+  edtDescricao.Text := FController.software.build.List[Pred(datasource.DataSet.RecNo)].DESCRICAO;
+end;
+
+procedure TPageSoftwares.PreencherListaModulos;
+var
+  ID : string;
+begin
+  ID := FController.Software.build.List[Pred(datasource.DataSet.RecNo)].ID;
+  FController
+    .SoftwareModulo
+      .IDSOFTWARE(ID)
+      .Build
+        .ListarTodos;
+  FController.SoftwareModulo.PreencherLista(listModulos.Items);
+end;
+
+end.

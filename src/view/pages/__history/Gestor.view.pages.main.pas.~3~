@@ -1,0 +1,39 @@
+unit Gestor.view.pages.main;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Router4D.Interfaces, Vcl.ExtCtrls;
+
+type
+  TPageMain = class(TForm, iRouter4DComponent)
+    pnlIndex: TPanel;
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+    function Render : TForm;
+    procedure UnRender;
+  end;
+
+var
+  PageMain: TPageMain;
+
+implementation
+
+{$R *.dfm}
+
+{ TPageMain }
+
+function TPageMain.Render: TForm;
+begin
+  Result := Self;
+end;
+
+procedure TPageMain.UnRender;
+begin
+//
+end;
+
+end.

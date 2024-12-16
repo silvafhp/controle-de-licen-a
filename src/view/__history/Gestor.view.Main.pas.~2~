@@ -1,0 +1,38 @@
+unit Gestor.view.Main;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, iRouter4D.Interfaces;
+
+type
+  TFormMain = class(TForm, iRouter4DComponent)
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+    function Render : TForm;
+    procedure UnRender;
+  end;
+
+var
+  FormMain: TFormMain;
+
+implementation
+
+{$R *.dfm}
+
+{ TFormMain }
+
+function TFormMain.Render: TForm;
+begin
+  Result := Self;
+end;
+
+procedure TFormMain.UnRender;
+begin
+//
+end;
+
+end.

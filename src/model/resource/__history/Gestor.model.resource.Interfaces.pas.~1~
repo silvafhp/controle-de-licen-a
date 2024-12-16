@@ -1,0 +1,7 @@
+unit Gestor.model.resource.Interfaces;
+
+interface
+
+implementation
+
+end.

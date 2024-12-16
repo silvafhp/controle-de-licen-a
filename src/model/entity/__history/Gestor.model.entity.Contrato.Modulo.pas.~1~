@@ -1,0 +1,40 @@
+unit ControleDeLicencas.model.entity.Contrato.Modulo;
+
+interface
+
+uses
+  SimpleAttributes;
+
+type
+  [Tabela('CONTRATOSMODULOS')]
+  TContratoModulo = class
+    private
+    FID: String;
+    FIDCONTRATO: string;
+    FIDMODULO: string;
+    public
+      constructor Create;
+      destructor Destroy; override;
+      [Campo('ID'), Pk]
+      property ID: String read FID write FID;
+      [Campo('IDCONTRATO'), FK, NotNull]
+      property IDCONTRATO: String read FIDCONTRATO write FIDCONTRATO;
+      [Campo('IDMODULO'), FK, NotNull]
+      property IDMODULO: String read FIDMODULO write FIDMODULO;
+  end;
+implementation
+
+{ TContratoModulo }
+
+constructor TContratoModulo.Create;
+begin
+
+end;
+
+destructor TContratoModulo.Destroy;
+begin
+
+  inherited;
+end;
+
+end.

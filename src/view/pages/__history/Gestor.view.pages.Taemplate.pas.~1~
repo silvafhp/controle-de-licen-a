@@ -1,0 +1,36 @@
+unit Gestor.view.pages.Template;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.ExtCtrls, Vcl.StdCtrls, Data.DB,
+  Vcl.Grids, Vcl.DBGrids, Vcl.Buttons, Vcl.WinXPanels;
+
+type
+  TPageTemplate = class(TForm)
+    pnlPrincipal: TPanel;
+    pnlTop: TPanel;
+    pnlBody: TPanel;
+    lblPage: TLabel;
+    CardPanel1: TCardPanel;
+    cardGrid: TCard;
+    pnlBottom: TPanel;
+    btnFechar: TSpeedButton;
+    btnNovo: TSpeedButton;
+    pnlCardBody: TPanel;
+    gridDados: TDBGrid;
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  PageTemplate: TPageTemplate;
+
+implementation
+
+{$R *.dfm}
+
+end.

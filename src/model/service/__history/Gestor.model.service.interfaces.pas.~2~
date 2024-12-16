@@ -1,0 +1,24 @@
+unit Gestor.model.service.interfaces;
+
+interface
+
+uses
+  Data.DB, System.Generics.Collections;
+type
+  iService<T: Class> = interface
+  ['{6813D348-15EC-41EE-9532-BE920FBAFF49}']
+    function ListarTodos: iService<T>;
+    function ListarPorId(aId: String): iService<T>;
+    function ListarPor(Field: String; Value: Variant): iService<T>;
+    function Inserir: iService<T>;
+    function Atualizar: iService<T>;
+    function Excluir: iService<T>; overload;
+    function Excluir(Field, Value: String): iService<T>; overload;
+    function IsEmpty : Boolean;
+    function DataSource(Value : TDataSource) : iService<T>;
+    function This: T;
+    function List : TObjectList<T>;
+  end;
+implementation
+
+end.

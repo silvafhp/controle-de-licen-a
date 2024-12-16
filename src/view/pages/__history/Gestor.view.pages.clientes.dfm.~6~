@@ -1,0 +1,56 @@
+inherited PageClientes: TPageClientes
+  Caption = 'Cadastro de Clientes'
+  PixelsPerInch = 96
+  TextHeight = 19
+  inherited pnlPrincipal: TPanel
+    inherited pnlTop: TPanel
+      inherited lblPage: TLabel
+        Caption = 'Cadastro de Clientes'
+        ExplicitWidth = 169
+      end
+    end
+    inherited pnlBody: TPanel
+      inherited CardPanel1: TCardPanel
+        inherited cardGrid: TCard
+          inherited pnlGridTop: TPanel
+            inherited btnNovo: TSpeedButton
+              OnClick = btnNovoClick
+            end
+            inherited btnAtualizar: TSpeedButton
+              OnClick = nil
+            end
+          end
+          inherited pnlCardBody: TPanel
+            inherited gridDados: TDBGrid
+              Columns = <
+                item
+                  Expanded = False
+                  FieldName = 'ID'
+                  Width = 306
+                  Visible = True
+                end
+                item
+                  Expanded = False
+                  FieldName = 'NOME'
+                  Width = 237
+                  Visible = True
+                end
+                item
+                  Expanded = False
+                  FieldName = 'CNPJ'
+                  Width = 199
+                  Visible = True
+                end>
+            end
+          end
+        end
+        inherited cardCadastro: TCard
+          inherited pnlCadastroBottom: TPanel
+            ExplicitTop = 350
+            ExplicitWidth = 820
+          end
+        end
+      end
+    end
+  end
+end

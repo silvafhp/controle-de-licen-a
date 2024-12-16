@@ -1,0 +1,35 @@
+unit Gestor.utils.ttrings.helper;
+
+interface
+uses
+  System.Classes;
+
+type
+  TStringsHelper = class helper for TStrings
+    private
+    public
+      function AddStringAsObject(Text, ID : string) : Integer;
+      procedure FreeObjects;
+  end;
+
+implementation
+
+uses
+  Gestor.utils;
+
+{ TStringsHelper }
+
+function TStringsHelper.AddStringAsObject(Text, ID: string): Integer;
+begin
+  Result := Self.AddObject(Text, TStringObject.Create(ID));
+end;
+
+procedure TStringsHelper.FreeObjects;
+var
+  i : Integer;
+begin
+  for I := 0 to Pred(Self.Count) do
+    Self.Objects[I].Free;
+end;
+
+end.

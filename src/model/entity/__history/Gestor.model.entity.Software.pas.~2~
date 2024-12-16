@@ -1,0 +1,39 @@
+unit Gestor.model.entity.Software;
+
+interface
+uses
+  SimpleAttributes;
+
+type
+  [Tabela('SOFTWARES')]
+  TSoftware = class
+    private
+      FID : String;
+      FNOME : String;
+      FDESCRICAO : String;
+    public
+      constructor Create;
+      destructor Destroy; override;
+      [Campo('ID'), Pk]
+      property ID : String read FID write FID;
+      [Campo('NOME'), NotNull]
+      property NOME : String read FNOME write FNOME;
+      [Campo('DESCRICAO')]
+      property DESCRICAO : String read FDESCRICAO write FDESCRICAO;
+  end;
+implementation
+
+{ TSoftware }
+
+constructor TSoftware.Create;
+begin
+
+end;
+
+destructor TSoftware.Destroy;
+begin
+
+  inherited;
+end;
+
+end.
